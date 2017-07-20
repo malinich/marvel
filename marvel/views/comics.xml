@@ -1,0 +1,99 @@
+<odoo>
+    <data>
+        <template id="listing">
+            <t t-call="website.layout">
+                <ul>
+                    <li t-foreach="objects" t-as="object">
+
+                        <img heigh="100px" width="100px"
+                             t-if="object['images']"
+                             t-attf-src="#{object['images'][0]}"/>
+                        <img heigh="100px" width="100px"
+                             t-if="not bool(object['images'])"
+                             src="https://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available/portrait_incredible.jpg"/>
+                        <a t-attf-href="#{ root }objects/#{ object['id'] }">
+                            <t t-esc="object['title']"/>
+                        </a>
+                    </li>
+                </ul>
+            </t>
+        </template>
+<template id="object">
+            <t t-call="website.layout">
+                <t t-set="title">Comic</t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <h1>
+                            <t t-esc="object['title']"/>
+                        </h1>
+
+                        <a class="btn btn-info" t-attf-href="#{root}">home</a>
+
+                        <form class="navbar-form navbar-left" action="/marvel/save" method="post">
+                            <div class="form-group">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" class="form-control" name="obj_id" id="obj_id" t-attf-value="#{object['id']}"/>
+                            </div>
+                            <button type="submit" class="btn btn-info">save</button>
+                        </form>
+                        <dl>
+                            <dt>
+                                Description:
+                            </dt>
+                            <dd>
+                                <t t-esc="object['description']"/>
+                            </dd>
+
+                            <dt>
+                                Images:
+                            </dt>
+                            <t t-foreach="object['images']" t-as="image">
+                                <dd>
+                                    <img heigh="100px" width="100px"
+                                         t-if="image"
+                                         t-attf-src="#{image}"/>
+
+                                    <img heigh="100px" width="100px"
+                                         t-if="not bool(image)"
+                                         src="https://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available/portrait_incredible.jpg"/>
+                                </dd>
+                            </t>
+
+                            <dt>
+                                Characters:
+                            </dt>
+                            <t t-foreach="object['characters']" t-as="character">
+                                <dd>
+                                    <t t-esc="character"/>
+                                </dd>
+                            </t>
+
+                            <dt>
+                                Stories:
+                            </dt>
+                            <t t-foreach="object['stories']" t-as="story">
+                                <dd>
+                                    <t t-esc="story"/>
+                                </dd>
+                            </t>
+
+                            <dt>
+                                Date:
+                            </dt>
+                            <dd>
+                                <t t-esc="object['dates']"/>
+                            </dd>
+
+                            <dt>
+                                Price:
+                            </dt>
+                            <dd>
+                                <t t-esc="object['prices']"/>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

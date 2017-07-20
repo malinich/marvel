@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="marvel.list">
+            <field name="name">marvel list</field>
+            <field name="model">marvel.comics</field>
+            <field name="view_mode">treelist kanban</field>
+
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="title"/>
+                    <field name="description"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="marvel.action_window">
+            <field name="name">marvel window</field>
+            <field name="res_model">marvel.comics</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--server action to the one above -->
+        <record model="ir.actions.server" id="marvel.action_server">
+            <field name="name">marvel index</field>
+            <field name="model_id" ref="model_marvel_comics"/>
+            <field name="code">
+                action = {
+                "type": "ir.actions.act_url",
+                "url": "/marvel/",
+                "target": "self",
+                }
+            </field>
+        </record>
+
+
+        <!-- Top menu item -->
+        <menuitem name="marvel" id="marvel.menu_root"/>
+        <!-- menu categories -->
+        <menuitem name="Menu 1" id="marvel.menu_1" parent="marvel.menu_root"/>
+        <menuitem name="Menu 2" id="marvel.menu_2" parent="marvel.menu_root"/>
+        <!-- actions -->
+        <menuitem name="List" id="marvel.menu_1_list" parent="marvel.menu_1"
+                  action="marvel.action_window"/>
+        <menuitem name="Server to list" id="marvel" parent="marvel.menu_2"
+                  action="marvel.action_server"/>
+
+    </data>
+</odoo>

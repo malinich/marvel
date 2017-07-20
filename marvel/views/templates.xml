@@ -1,0 +1,82 @@
+<odoo>
+    <data>
+        <template id="index">
+            <t t-call="website.layout">
+                <t t-set="title">Marvel Comics</t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <form class="navbar-form navbar-left" action="/marvel/find">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="title" id="title"
+                                                   placeholder="Search"/>
+                                        </div>
+                                        <button type="submit" class="btn btn-default">Submit</button>
+                                    </form>
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-6 -->
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <ul>
+                            <li t-foreach="objects" t-as="object">
+
+                                <img heigh="100px" width="100px"
+                                     t-if="object['images']"
+                                     t-attf-src="#{object['images'][0]['path']}.#{object['images'][0]['extension']}"/>
+                                <img heigh="100px" width="100px"
+                                     t-if="not bool(object['images'])"
+                                     src="https://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available/portrait_incredible.jpg"/>
+                                <a t-attf-href="#{ root }/objects/#{ object['id'] }">
+                                    <t t-esc="object['title']"/>
+                                </a>
+                                <a style="margin-left: 30px" t-attf-href="#{object['urls'][0]['url']}">original</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="empty">
+            <t t-call="website.layout">
+                <t t-set="title">Comic not found</t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <div>Object Not Found go to
+                            <a t-attf-href="#{root}">home</a>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="error">
+            <t t-call="website.layout">
+                <t t-set="title">Error happend</t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <div>Error happend go to home
+                            <a t-attf-href="#{root}">home</a>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="save">
+            <t t-call="website.layout">
+                <t t-set="title">You Save</t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <div>You save, go to home<a t-attf-href="#{root}">home</a>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

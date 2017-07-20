@@ -1,0 +1,4 @@
+# coding: utf-8
+
+PRIVATE_KEY = "55be91fef4d4316e3df0009f00acf6f1e6cb16b3"
+PUBLIC_KEY = "1d5365b38cdcd75799f1f05327d55d56"
